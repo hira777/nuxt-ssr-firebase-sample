@@ -12,5 +12,10 @@ const config = {
 };
 const nuxt = new Nuxt(config);
 
+app.use((_, res, next) => {
+  // https://firebase.google.com/docs/hosting/manage-cache?hl=ja
+  res.set('Cache-Control', 'public, max-age=300, s-maxage=600');
+  next();
+});
 app.use(nuxt.render);
 exports.ssr = functions.https.onRequest(app);
